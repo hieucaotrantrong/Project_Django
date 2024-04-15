@@ -21,9 +21,9 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin", admin.site.urls),
     path("", include("app.urls")),
 ]
 
-# Đảm bảo rằng đoạn mã static được đặt ở cuối
+# Đảm bảo rằng đoạn mã sta/tic được đặt ở cuối
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

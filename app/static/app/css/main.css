@@ -39,13 +39,16 @@ h6 {
 	width: 25px;
 	display: inline-block;
 	margin-left: 15px;
+	position: relative;
+	/* Sử dụng position để xác định vị trí */
+	z-index: 2;
+	/* Đặt z-index cao hơn để đảm bảo nằm trên cùng */
 }
 
 #cart-total {
 	display: block;
 	text-align: center;
-	color: #fff;
-	background-color: red;
+	background-color: #fff;
 	width: 20px;
 	height: 25px;
 	border-radius: 50%;
