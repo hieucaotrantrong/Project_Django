@@ -18,16 +18,6 @@ class CreateUserForm(UserCreationForm):
         ]
 
 
-#  customer
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=False)
-    name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 # product
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
@@ -49,9 +39,7 @@ class Product(models.Model):
 
 # order
 class Order(models.Model):
-    customer = models.ForeignKey(
-        Customer, on_delete=models.SET_NULL, blank=True, null=True
-    )
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     date_order = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=200, null=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
