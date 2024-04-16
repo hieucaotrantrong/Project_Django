@@ -18,7 +18,6 @@ h6 {
 	padding: 5px;
 }
 
-
 .thumbnail {
 	width: 350px;
 	height: 200px;
@@ -39,16 +38,13 @@ h6 {
 	width: 25px;
 	display: inline-block;
 	margin-left: 15px;
-	position: relative;
-	/* Sử dụng position để xác định vị trí */
-	z-index: 2;
-	/* Đặt z-index cao hơn để đảm bảo nằm trên cùng */
 }
 
 #cart-total {
 	display: block;
 	text-align: center;
-	background-color: #fff;
+	color: #fff;
+	background-color: red;
 	width: 20px;
 	height: 25px;
 	border-radius: 50%;

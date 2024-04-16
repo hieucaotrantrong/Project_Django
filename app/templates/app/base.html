@@ -83,17 +83,11 @@ const csrftoken = getCookie('csrftoken');
                 </form>
               </div>
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                   User 1
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Trang cá nhân</a></li>
-                    <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                    <li><a class="dropdown-item" href="#">Thoát</a></li>
-                    
-                  </ul>
-                </li>
+                <div class="form-inline my-2 my-lg-0">
+                  <span >Heloo!{{request.user}} </span>
+                  <span><a href="{% url 'logout' %}">Đăng xuất</a></span>
+                  
+                </div>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Đăng Nhập</a>
                 </li>
@@ -112,6 +106,8 @@ const csrftoken = getCookie('csrftoken');
           {% block main-content %}{% endblock main-content %}  
           {% block cart_content %}{% endblock cart_content %}
           {% block content_checkout %}{% endblock content_checkout %}
+          {% block register %}{% endblock register %}
+    
           <!-- Footer -->  
         <!-- Footer -->
 <footer class="text-center text-lg-start bg-body-tertiary text-muted " style="width: 100%;">

@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import *
 import json
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 # home
@@ -35,7 +38,6 @@ def cart(request):
     return render(request, "app/cart.html", context)
 
 
-#  checkout
 # checkout
 def checkout(request):
     if request.user.is_authenticated:
@@ -68,3 +70,38 @@ def updateItem(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse("added", safe=False)
+
+
+# Register
+def register(request):
+    form = CreateUserForm()
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {"form": form}
+    return render(request, "app/register.html", context)
+
+
+#  Login
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.info(request, "Tài khoản hoặc mật khẩu sai !")
+
+    context = {}
+    return render(request, "app/login.html", context)
+
+
+# logoutpagedef
+def logoutPage(request):
+    logout(request)
+    return redirect("login")
