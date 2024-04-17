@@ -12,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
+<body>
     {% block register %}  
     <section class="vh-100" style="background-color: #eee;">
         <div class="container h-100">
@@ -52,7 +53,9 @@
                         <p class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Bạn chưa có tài khoản?
                             <a href="{% url 'register' %}">Đăng kí</a>
                         </p>
-                        
+                        {% for message in messages %}
+                        <p id="message" class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{message}}
+                        {% endfor %}
                       </form>
       
                     </div>

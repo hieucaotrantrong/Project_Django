@@ -79,6 +79,7 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect("login")
     context = {"form": form}
     return render(request, "app/register.html", context)
 
@@ -105,3 +106,12 @@ def loginPage(request):
 def logoutPage(request):
     logout(request)
     return redirect("login")
+
+
+#  search
+def search(request):
+    if request.method == "POST":
+        searched = request.POST["searched"]
+        keys = Product.objects.filter(name__contains=searched)
+    return render(request, "app/search.html", {"searched": searched, "keys": keys})
+
