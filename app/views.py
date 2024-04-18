@@ -14,12 +14,22 @@ def home(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = "hidden"
+        user_login = "show"
+
     else:
         items = []
         order = {"get_cart_items": 0, "get_cart_total": 0}
         cartItems = order["get_cart_items"]
+        user_not_login = "show"
+        user_login = "hidden"
     products = Product.objects.all()
-    context = {"products": products, "cartItems": cartItems}
+    context = {
+        "products": products,
+        "cartItems": cartItems,
+        "user_not_login": user_not_login,
+        "user_login": user_login,
+    }
     return render(request, "app/home.html", context)
 
 
@@ -30,11 +40,21 @@ def cart(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = "hidden"
+        user_login = "show"
     else:
         items = []
         order = {"get_cart_items": 0, "get_cart_totaL": 0}
         cartItems = order["get_cart_items"]
-    context = {"items": items, "order": order, "cartItems": cartItems}
+        user_not_login = "show"
+        user_login = "hidden"
+    context = {
+        "items": items,
+        "order": order,
+        "cartItems": cartItems,
+        "user_not_login": user_not_login,
+        "user_login": user_login,
+    }
     return render(request, "app/cart.html", context)
 
 
@@ -45,11 +65,21 @@ def checkout(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = "show"
+        user_login = "hidden"
     else:
         items = []
         order = {"get_cart_items": 0, "get_cart_total": 0}
         cartItems = order["get_cart_items"]
-    context = {"items": items, "order": order, "cartItems": cartItems}
+        user_not_login = "hidden"
+        user_login = "show"
+    context = {
+        "items": items,
+        "order": order,
+        "cartItems": cartItems,
+        "user_not_login": user_not_login,
+        "user_login": user_login,
+    }
     return render(request, "app/checkout.html", context)
 
 
@@ -115,3 +145,30 @@ def search(request):
         keys = Product.objects.filter(name__contains=searched)
     return render(request, "app/search.html", {"searched": searched, "keys": keys})
 
+
+#  detail
+def detail(request):
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+        user_not_login = "show"
+        user_login = "hidden"
+    else:
+        items = []
+        order = {"get_cart_items": 0, "get_cart_total": 0}
+        cartItems = order["get_cart_items"]
+        user_not_login = "hidden"
+        user_login = "show"
+    id = request.GET.get("id", "")
+    products = Product.objects.filter(id=id)
+    context = {
+        "products": products,
+        "items": items,
+        "order": order,
+        "cartItems": cartItems,
+        "user_not_login": user_not_login,
+        "user_login": user_login,
+    }
+    return render(request, "app/detail.html", context)
